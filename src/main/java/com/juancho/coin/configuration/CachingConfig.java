@@ -31,7 +31,7 @@ public class CachingConfig {
          }
       };
 
-      cacheManager.setCacheNames(Arrays.asList("userCache"));
+      cacheManager.setCacheNames(Arrays.asList("userCache", "coinCache"));
       return cacheManager;
    }
 }

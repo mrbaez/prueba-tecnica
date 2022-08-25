@@ -1,4 +1,4 @@
-CREATE TABLE User
+CREATE TABLE user
 (
     id IDENTITY NOT NULL PRIMARY KEY,
     name           VARCHAR        NOT NULL,
@@ -7,5 +7,14 @@ CREATE TABLE User
     password       VARCHAR        NOT NULL,
     local_currency VARCHAR        NOT NULL,
     tax            DECIMAL(12, 2) NOT NULL
+
+);
+
+CREATE TABLE coin
+(
+    id IDENTITY NOT NULL PRIMARY KEY,
+    name      VARCHAR        NOT NULL,
+    ranking   INT            NOT NULL,
+    price_usd DECIMAL(12, 2) NOT NULL
 
 );

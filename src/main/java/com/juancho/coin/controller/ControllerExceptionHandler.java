@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.juancho.coin.exception.CoinNotFoundException;
+import com.juancho.coin.exception.CoinPreConditionException;
 import com.juancho.coin.exception.UserNotFoundException;
 import com.juancho.coin.exception.UserPreConditionException;
 
@@ -16,13 +18,25 @@ public class ControllerExceptionHandler {
 
    @ResponseStatus(HttpStatus.NOT_FOUND)
    @ExceptionHandler(UserNotFoundException.class)
-   public void handleNotFound(UserNotFoundException ex) {
+   public void handleUserNotFound(UserNotFoundException ex) {
       log.error("Requested user not found");
    }
 
    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
    @ExceptionHandler(UserPreConditionException.class)
-   public void handleBlankName(UserPreConditionException ex) {
+   public void handleUserBlankUserName(UserPreConditionException ex) {
+      log.error("Precondition fail");
+   }
+
+   @ResponseStatus(HttpStatus.NOT_FOUND)
+   @ExceptionHandler(CoinNotFoundException.class)
+   public void handleCoinNotFound(CoinNotFoundException ex) {
+      log.error("Requested coin not found");
+   }
+
+   @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+   @ExceptionHandler(CoinPreConditionException.class)
+   public void handleCoinBlankName(CoinPreConditionException ex) {
       log.error("Precondition fail");
    }
 }
