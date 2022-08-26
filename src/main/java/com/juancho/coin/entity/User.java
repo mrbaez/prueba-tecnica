@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import com.juancho.coin.enums.ECurrency;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.CustomLog;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -40,6 +42,7 @@ public class User {
    private String userName;
 
    @NonNull
+   @Column(length = 8)
    private String password;
 
    @NonNull

@@ -4,7 +4,7 @@ CREATE TABLE user
     name           VARCHAR        NOT NULL,
     last_name      VARCHAR        NOT NULL,
     user_name      VARCHAR        NOT NULL,
-    password       VARCHAR        NOT NULL,
+    password       VARCHAR(8)     NOT NULL,
     local_currency VARCHAR        NOT NULL,
     tax            DECIMAL(12, 2) NOT NULL
 
