@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.juancho.coin.dto.UserDto;
 import com.juancho.coin.entity.User;
 import com.juancho.coin.enums.ECurrency;
 import com.juancho.coin.exception.UserNotFoundException;
@@ -98,7 +99,7 @@ class UserControllerTest {
    @Test
    public void should_CreateUser_When_ValidRequest() throws Exception {
 
-      when(userService.create(any())).thenReturn(User
+      when(userService.create(any())).thenReturn(UserDto
             .builder()
             .id(33L)
             .name("Roberto")

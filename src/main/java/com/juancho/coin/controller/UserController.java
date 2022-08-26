@@ -37,8 +37,7 @@ public class UserController {
    @PostMapping
    @Loggable
    ResponseEntity<UserDto> create(@RequestBody UserDto user) {
-      User created = userService.create(mapper.fromDto(user));
-      return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDto(created));
+      return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(user));
    }
 
    @PutMapping()

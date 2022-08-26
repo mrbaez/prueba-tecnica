@@ -10,6 +10,8 @@ CREATE TABLE user
 
 );
 
+CREATE UNIQUE INDEX user_name_uk ON user (user_name);
+
 CREATE TABLE coin
 (
     id IDENTITY NOT NULL PRIMARY KEY,
@@ -17,4 +19,13 @@ CREATE TABLE coin
     ranking   INT            NOT NULL,
     price_usd DECIMAL(12, 2) NOT NULL
 
+);
+
+CREATE TABLE user_coin
+(
+    user_id INT NOT NULL,
+    coin_id INT NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES user (id),
+    FOREIGN KEY(coin_id) REFERENCES coin(id),
+    PRIMARY KEY (user_id, coin_id)
 );

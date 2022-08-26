@@ -9,6 +9,7 @@ import com.juancho.coin.exception.CoinNotFoundException;
 import com.juancho.coin.exception.CoinPreConditionException;
 import com.juancho.coin.exception.UserNotFoundException;
 import com.juancho.coin.exception.UserPreConditionException;
+import com.juancho.coin.exception.UserUniqueUserNameException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,6 +21,12 @@ public class ControllerExceptionHandler {
    @ExceptionHandler(UserNotFoundException.class)
    public void handleUserNotFound(UserNotFoundException ex) {
       log.error("Requested user not found");
+   }
+
+   @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+   @ExceptionHandler(UserUniqueUserNameException.class)
+   public void handleUserUniqueUserName(UserUniqueUserNameException ex) {
+      log.error("There is already a User whit the user name");
    }
 
    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)

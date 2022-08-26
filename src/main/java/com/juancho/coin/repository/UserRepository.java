@@ -11,4 +11,6 @@ import com.juancho.coin.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
    List<User> findByUserName(String userName);
+
+   boolean existsByUserName(String userName);
 }
