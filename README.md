@@ -36,3 +36,56 @@ requerimientos para esto son los siguientes:
     * Precio (en la moneda del usuario).
     * Nombre.
     * Ranking en capitalización de Mercado.
+
+## Tecnologías utilizadas para implementar la solución.
+
+* Lenguaje: java versión 17
+* Framework: spring boot.
+* Librerias: Jacoco para code coverage, mockito para los tests, swagger para documentar los servicios rests, lombok.
+* Docker
+
+## Instalación  del proyecto
+1. **Descargar código fuente**
+
+```console
+https://github.com/mrbaez/prueba-tecnica.git
+```
+
+2. **Compilar**
+
+```console
+./gradlew clean build
+```
+
+3. **Correr el proyecto localmente**
+
+```console
+./gradlew bootRun
+```
+
+4**Urls**
+
+   [Documentación de la api: Swagger](http://localhost:8080/swagger-ui.html)
+
+![](/swagger.png)
+
+
+## Tests
+
+**Ejecución de tests:**
+```console
+ ./gradlew clean test
+```
+
+**Para revisar la cobertura de código se uso jacoco:**
+```console
+ ./gradlew test jacocoTestReport
+```
+
+![](/code_coverage.png)
+
+El resultado queda en:
+
+```console
+ {ruta del proyecto}/prueba-tecnica/build/jacocoHtml/index.html
+```
