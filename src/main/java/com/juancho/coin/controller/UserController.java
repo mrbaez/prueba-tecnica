@@ -55,7 +55,7 @@ public class UserController {
    }
 
    @GetMapping(value = "/id/{id}")
-   UserDto findByUserName(@PathVariable(value = "id") Long id) {
+   UserDto findById(@PathVariable(value = "id") Long id) {
       return mapper.toDto(userService.findById(id));
    }
 

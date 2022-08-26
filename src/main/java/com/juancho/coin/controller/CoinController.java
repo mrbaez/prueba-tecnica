@@ -55,7 +55,7 @@ public class CoinController {
    }
 
    @GetMapping(value = "/id/{id}")
-   CoinDto findByCoinName(@PathVariable(value = "id") Long id) {
+   CoinDto findById(@PathVariable(value = "id") Long id) {
       return mapper.toDto(coinService.findById(id));
    }
 
