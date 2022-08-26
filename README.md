@@ -63,7 +63,7 @@ https://github.com/mrbaez/prueba-tecnica.git
 ./gradlew bootRun
 ```
 
-4**Urls**
+4. **Urls**
 
    [Documentación de la api: Swagger](http://localhost:8080/swagger-ui.html)
 
