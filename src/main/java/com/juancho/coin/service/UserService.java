@@ -1,5 +1,7 @@
 package com.juancho.coin.service;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.juancho.coin.dto.CoinDto;
+import com.juancho.coin.dto.UserCoinDto;
 import com.juancho.coin.dto.UserDto;
 import com.juancho.coin.entity.Coin;
 import com.juancho.coin.entity.User;
@@ -94,6 +97,16 @@ public class UserService {
       }
       User user = userRepository.findByUserName(userName).orElseThrow(() -> new UserNotFoundByUserNameException(userName));
       return mapper.toDto(user);
+   }
+
+   public List<UserCoinDto> findAllCoins(Long id) {
+      log.info("finding coin for user id: {}", id);
+      UserDto userDto = this.findById(id);
+      return userDto
+            .getCoinSet()
+            .stream()
+            .map(x -> new UserCoinDto(x.getName(), x.getRanking(), x.getPriceUsd().multiply(userDto.getTax())))
+            .collect(toList());
    }
 
 }

@@ -1,7 +1,5 @@
 package com.juancho.coin.controller;
 
-import static java.util.stream.Collectors.toList;
-
 import java.util.List;
 
 import org.mapstruct.factory.Mappers;
@@ -17,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.juancho.coin.annotations.Loggable;
+import com.juancho.coin.dto.UserCoinDto;
 import com.juancho.coin.dto.UserDto;
-import com.juancho.coin.entity.User;
 import com.juancho.coin.mappers.UserMapper;
 import com.juancho.coin.service.UserService;
 
@@ -54,6 +52,11 @@ public class UserController {
    @GetMapping(value = "/id/{id}")
    UserDto findById(@PathVariable(value = "id") Long id) {
       return userService.findById(id);
+   }
+
+   @GetMapping(value = "/userCoins/{id}")
+   List<UserCoinDto> findAllCoins(@PathVariable(value = "id") Long id) {
+      return userService.findAllCoins(id);
    }
 
    @GetMapping(value = "/userName/{userName}")
