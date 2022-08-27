@@ -1,10 +1,13 @@
 package com.juancho.coin.service;
 
+import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toList;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.cache.annotation.CacheConfig;
@@ -30,6 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @CacheConfig(cacheNames = "userCache")
 public class UserService {
+
+   private static final Integer TOP = 3;
 
    private final UserRepository userRepository;
 
@@ -100,13 +105,26 @@ public class UserService {
    }
 
    public List<UserCoinDto> findAllCoins(Long id) {
-      log.info("finding coin for user id: {}", id);
+      log.info("finding coin for user whit id: {}", id);
       UserDto userDto = this.findById(id);
       return userDto
             .getCoinSet()
             .stream()
             .map(x -> new UserCoinDto(x.getName(), x.getRanking(), x.getPriceUsd().multiply(userDto.getTax())))
             .collect(toList());
+   }
+
+   public List<UserCoinDto> findTopCoins(Long id, Boolean asc) {
+      log.info("finding top 3 coin for user whit id: {}", id);
+      UserDto userDto = this.findById(id);
+      Stream<UserCoinDto> userCoinDtoList = userDto
+            .getCoinSet()
+            .stream()
+            .map(x -> new UserCoinDto(x.getName(), x.getRanking(), x.getPriceUsd().multiply(userDto.getTax())));
+      if (nonNull(asc) && asc) {
+         return userCoinDtoList.sorted(Comparator.comparing(UserCoinDto::getLocalCurrencyPrice)).limit(TOP).collect(toList());
+      }
+      return userCoinDtoList.sorted((x, y) -> y.getLocalCurrencyPrice().compareTo(x.getLocalCurrencyPrice())).limit(TOP).collect(toList());
    }
 
 }

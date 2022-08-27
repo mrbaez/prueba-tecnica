@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.juancho.coin.annotations.Loggable;
@@ -57,6 +58,11 @@ public class UserController {
    @GetMapping(value = "/userCoins/{id}")
    List<UserCoinDto> findAllCoins(@PathVariable(value = "id") Long id) {
       return userService.findAllCoins(id);
+   }
+
+   @GetMapping(value = "/topUserCoins")
+   List<UserCoinDto> findTopCoins(@RequestParam Long id, @RequestParam(required = false) Boolean asc) {
+      return userService.findTopCoins(id, asc);
    }
 
    @GetMapping(value = "/userName/{userName}")
