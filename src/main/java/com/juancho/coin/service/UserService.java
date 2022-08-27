@@ -24,6 +24,7 @@ import com.juancho.coin.exception.UserNotFoundByUserNameException;
 import com.juancho.coin.exception.UserNotFoundException;
 import com.juancho.coin.exception.UserPreConditionException;
 import com.juancho.coin.exception.UserUniqueUserNameException;
+import com.juancho.coin.mappers.CoinMapper;
 import com.juancho.coin.mappers.UserMapper;
 import com.juancho.coin.repository.UserRepository;
 
@@ -41,6 +42,9 @@ public class UserService {
    private final CoinService coinService;
 
    private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
+
+   private final CoinMapper mapperCoin = Mappers.getMapper(CoinMapper.class);
+
 
    public UserService(UserRepository userRepository, CoinService coinService) {
       this.userRepository = userRepository;
@@ -70,7 +74,7 @@ public class UserService {
       if (!CollectionUtils.isEmpty(userDto.getCoinSet())) {
          Set<Coin> coinSet = new HashSet<>();
          for (CoinDto coin : userDto.getCoinSet()) {
-            coinSet.add(coinService.findById(coin.getId()));
+            coinSet.add(mapperCoin.fromDto(coinService.findById(coin.getId())));
          }
          user.setCoinSet(coinSet);
       }

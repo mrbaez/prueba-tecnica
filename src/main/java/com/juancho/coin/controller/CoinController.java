@@ -28,8 +28,6 @@ public class CoinController {
 
    private final CoinService coinService;
 
-   private final CoinMapper mapper = Mappers.getMapper(CoinMapper.class);
-
    public CoinController(CoinService coinService) {
       this.coinService = coinService;
    }
@@ -37,36 +35,32 @@ public class CoinController {
    @PostMapping
    @Loggable
    ResponseEntity<CoinDto> create(@RequestBody CoinDto coin) {
-      Coin created = coinService.create(mapper.fromDto(coin));
-      return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDto(created));
+      return ResponseEntity.status(HttpStatus.CREATED).body(coinService.create(coin));
    }
 
    @PutMapping()
-   ResponseEntity<CoinDto> update(@RequestBody Coin coin) {
-      Coin created = coinService.update(coin);
-      return ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(created));
+   ResponseEntity<CoinDto> update(@RequestBody CoinDto coin) {
+      return ResponseEntity.status(HttpStatus.CREATED).body(coinService.update(coin));
    }
 
    @GetMapping()
    @Loggable
    List<CoinDto> all() {
-      List<Coin> coins = coinService.findAll();
-      return coins.stream().map(mapper::toDto).collect(toList());
+      return coinService.findAll();
    }
 
    @GetMapping(value = "/id/{id}")
    CoinDto findById(@PathVariable(value = "id") Long id) {
-      return mapper.toDto(coinService.findById(id));
+      return coinService.findById(id);
    }
 
    @GetMapping(value = "/coinName/{coinName}")
    List<CoinDto> findByCoinName(@PathVariable(value = "coinName") String coinName) {
-      List<Coin> coins = coinService.findByCoinName(coinName);
-      return coins.stream().map(mapper::toDto).collect(toList());
+      return coinService.findByCoinName(coinName);
    }
 
    @DeleteMapping("/id/{id}")
    CoinDto delete(@PathVariable(value = "id") Long id) {
-      return mapper.toDto(coinService.delete(id));
+      return coinService.delete(id);
    }
 }
