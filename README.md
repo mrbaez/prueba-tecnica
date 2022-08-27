@@ -63,7 +63,19 @@ https://github.com/mrbaez/prueba-tecnica.git
 ./gradlew bootRun
 ```
 
-4. **Urls**
+4. **Generar imagen de docker**
+
+```console
+docker build --build-arg JAR_FILE=build/libs/coin-0.0.1-SNAPSHOT.jar -t juancho/coin .
+```
+
+5. **Levantar imagen de docker**
+
+```console
+docker run -p 8080:8080 juancho/coin
+```
+
+6. **Urls**
 
    [Documentación de la api: Swagger](http://localhost:8080/swagger-ui.html)
 
