@@ -112,8 +112,9 @@ class UserControllerTest {
       mockMvc
             .perform(post("/api/user")
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content("{ \"name\": \"Roberto\", \"lastName\": \"Baez\", \"userName\": \"baezmr\", \"password\": \"clave123\", \"localCurrency\": "
-                        + "\"PESOS_COLOMBIANOS\", \"tax\": 2.5}")
+                  .content(
+                        "{ \"name\": \"Roberto\", \"lastName\": \"Baez\", \"userName\": \"baezmr\", \"password\": \"clave123\", \"localCurrency\": "
+                              + "\"PESOS_COLOMBIANOS\", \"tax\": 2.5}")
                   .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated())
             .andExpect(jsonPath("$.id").value(33))
@@ -123,7 +124,7 @@ class UserControllerTest {
    @Test
    public void should_UpdateUser_When_ValidRequest() throws Exception {
 
-      when(userService.update(any())).thenReturn(User
+      when(userService.update(any())).thenReturn(UserDto
             .builder()
             .id(33L)
             .name("Roberto")
@@ -133,8 +134,10 @@ class UserControllerTest {
             .localCurrency(ECurrency.PESOS_COLOMBIANOS)
             .tax(new BigDecimal("2.5"))
             .build());
-      mockMvc
-            .perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content("{ \"name\": \"user\"}").accept(MediaType.APPLICATION_JSON))
+      mockMvc.perform(put("/api/user")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{ \"name\": \"Roberto\", \"lastName\": \"Baez\", \"userName\": \"baezmr\", \"password\": \"clave123\", \"localCurrency\": "
+                  + "\"PESOS_COLOMBIANOS\", \"tax\": 2.5}"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(33))
             .andExpect(jsonPath("$.name").value("Roberto"));
@@ -143,7 +146,7 @@ class UserControllerTest {
    @Test
    public void should_GetUser_When_ValidRequest() throws Exception {
 
-      User user = User
+      UserDto user = UserDto
             .builder()
             .id(1L)
             .name("Roberto")
@@ -165,26 +168,24 @@ class UserControllerTest {
    @Test
    public void should_GetUserByName_When_ValidRequest() throws Exception {
 
-      List<User> list = Stream
-            .of(User
-                  .builder()
-                  .id(1L)
-                  .name("Roberto")
-                  .lastName("Baez")
-                  .userName("baezmr")
-                  .password("clave123")
-                  .localCurrency(ECurrency.PESOS_COLOMBIANOS)
-                  .tax(new BigDecimal("2.5"))
-                  .build())
-            .collect(Collectors.toList());
+      UserDto user = UserDto
+            .builder()
+            .id(1L)
+            .name("Roberto")
+            .lastName("Baez")
+            .userName("baezmr")
+            .password("clave123")
+            .localCurrency(ECurrency.PESOS_COLOMBIANOS)
+            .tax(new BigDecimal("2.5"))
+            .build();
 
-      when(userService.findByUserName("Roberto")).thenReturn(list);
+      when(userService.findByUserName("Roberto")).thenReturn(user);
 
       ResultActions resultActions = mockMvc
             .perform(get("/api/user/userName/Roberto"))
             .andExpect(status().isOk())
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0].id").value(1));
+            .andExpect(jsonPath("$.id").value(1))
+            .andExpect(jsonPath("$.name").value("Roberto"));
    }
 
    @Test
@@ -197,7 +198,7 @@ class UserControllerTest {
    @Test
    public void should_deleteUser_When_ValidRequest() throws Exception {
 
-      User user = User
+      UserDto user = UserDto
             .builder()
             .id(1L)
             .name("Roberto")
@@ -207,6 +208,7 @@ class UserControllerTest {
             .localCurrency(ECurrency.PESOS_COLOMBIANOS)
             .tax(new BigDecimal("2.5"))
             .build();
+
       when(userService.delete(1L)).thenReturn(user);
 
       ResultActions resultActions = mockMvc

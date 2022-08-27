@@ -41,31 +41,28 @@ public class UserController {
    }
 
    @PutMapping()
-   ResponseEntity<UserDto> update(@RequestBody User user) {
-      User created = userService.update(user);
-      return ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(created));
+   ResponseEntity<UserDto> update(@RequestBody UserDto user) {
+      return ResponseEntity.status(HttpStatus.OK).body(userService.update(user));
    }
 
    @GetMapping()
    @Loggable
    List<UserDto> all() {
-      List<User> users = userService.findAll();
-      return users.stream().map(mapper::toDto).collect(toList());
+      return userService.findAll();
    }
 
    @GetMapping(value = "/id/{id}")
    UserDto findById(@PathVariable(value = "id") Long id) {
-      return mapper.toDto(userService.findById(id));
+      return userService.findById(id);
    }
 
    @GetMapping(value = "/userName/{userName}")
-   List<UserDto> findByUserName(@PathVariable(value = "userName") String userName) {
-      List<User> users = userService.findByUserName(userName);
-      return users.stream().map(mapper::toDto).collect(toList());
+   UserDto findByUserName(@PathVariable(value = "userName") String userName) {
+      return userService.findByUserName(userName);
    }
 
    @DeleteMapping("/id/{id}")
    UserDto delete(@PathVariable(value = "id") Long id) {
-      return mapper.toDto(userService.delete(id));
+      return userService.delete(id);
    }
 }
